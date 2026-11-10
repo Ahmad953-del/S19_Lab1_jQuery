@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <style type="text/css">
+    <!-- <style type="text/css">
         table {
             border-collapse: collapse;
         }
@@ -14,7 +14,12 @@
         tr {
             cursor: pointer;
         }
-    </style>
+
+    </style> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+     <script type="text/javascript" src="https://cdn.datatables.net/2.3.8/js/dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.min.css">
+
 </head>
 
 <body>
@@ -504,46 +509,158 @@
     </table>
 
     <script>
-let clickElements = []; // Assignation d'un tableau 
-let elements = document.getElementsByTagName("tr"); // Cherche tout les éléments dont la balise se trouve dans la parathèse.
-let selectionText = document.getElementById("selection"); // Vas chercher le prémier html qui a l'id en paramètre .
+// let clickElements = []; // Assignation d'un tableau 
+// let elements = document.getElementsByTagName("tr"); // Cherche tout les éléments dont la balise se trouve dans la parathèse.
+// let selectionText = document.getElementById("selection"); // Vas chercher le prémier html qui a l'id en paramètre .
 
 
-for(let i = 0;i<elements.length;i++){ // iteration comme celui de c#
-    let element = elements[i]; // assignation de l'élément itéré à la variable element
-    element.addEventListener("click", function(event){ 
-        let target = this; 
+// for(let i = 0;i<elements.length;i++){ // iteration comme celui de c#
+//     let element = elements[i]; // assignation de l'élément itéré à la variable element
+//     element.addEventListener("click", function(event){ 
+//         let target = this; 
+//         let targetIndex = clickElements.indexOf(target);
+//         if(targetIndex === -1){
+//             target.style.backgroundColor="lightblue";
+//             target.style.fontWeight = "900";
+//             clickElements.push(target);
+
+//            validationLongueur(clickElements.length, selectionText);
+//            changeStyle(target, "lightblue", 900, null)
+//         }
+//         else{
+//             target.style.backgroundColor="white";
+//             target.style.fontWeight = "500";
+//             clickElements.splice(targetIndex,1);
+
+//            validationLongueur(clickElements.length, selectionText);
+           
+//         }
+        
+//     });
+    
+//     element.addEventListener("mouseover", function() {this.style.border = "1px solid 888" ;});
+//     element.addEventListener("mouseout", function() {this.style.border = "" ;});
+// }
+// function validationLongueur(longueur, element){
+//      if(longueur > 1)
+//                 element.innerText = longueur+" éléments sélectionnés";
+//             else
+//                 element.innerText = longueur+" élément sélectionné";
+
+
+// }
+
+// function changeStyle(element , backgroundColor, fontWeight){
+//     if(backgroundColor !== null){   // Au cas où un appel à la fonction aurait un paramètre null pour le backgroudColor
+//         element.style.backgroundColor = backgroundColor;
+        
+//     }
+//     if(fontWeight !== null){    // idem mais pour fontWeight
+//         element.style.fontWeight = fontWeight;
+
+//     }
+// }
+
+// function changeStyle(element, backgroundColor, fontWeight, border){
+//     if(backgroundColor !== null){
+//         element.style.backgroundColor = backgroundColor;
+//     }
+//     if(fontWeight !== null){
+//         element.style.fontWeight = fontWeight;
+//     }
+//     if(border !== null){
+//         element.style.border = border;
+//     }
+// }
+
+// function refreshSelectionText(count){
+//         if(count > 1)
+//             $("#selection").text(count + " éléments sélectionnés");
+//         else 
+//             $("#selection").text(count + " élément sélectionné");        
+//     }
+        
+//     function changeStyle(element, backgroundColor, fontWeight, border){
+//         if(backgroundColor!== null){
+//             $(element).css("background-color", backgroundColor);
+//         }
+//         if(fontWeight !== null){
+//             $(element).css("font-weight", fontWeight);
+//         }
+//         if(border !== null){
+//             $(element).css("border", border);
+//         }
+//     }
+
+//     let clickElements = [];
+     
+//     $("tr").on("click",function(){
+//         let target = this;
+//         let targetIndex = clickElements.indexOf(target);
+//         if(targetIndex === -1){
+//             changeStyle(target, "lightblue", "900", null);
+//             clickElements.push(target);
+//             refreshSelectionText(clickElements.length);
+//         }
+//         else{
+//             changeStyle(target, "white", "500", null);
+//             clickElements.splice(targetIndex,1);
+//             refreshSelectionText(clickElements.length);
+//         }
+//     }).on("mouseover", function(){
+//         changeStyle(this, null, null, "1px solid #888");
+//     }).on("mouseout", function(){
+//         changeStyle(this, null, null, "");       
+//     });
+
+let clickElements = [];
+        
+    function refreshSelectionText(count){
+        if(count > 1)
+            $("#selection").text(count+ " éléments sélectionnés");
+        else 
+            $("#selection").text(count+ " élément sélectionné");        
+    }
+        
+    function changeStyle(element, backgroundColor, fontWeight, border){
+        if(backgroundColor!== null){
+            $(element).css("background-color", backgroundColor);
+        }
+        if(fontWeight !== null){        
+            $(element).css("font-weight", fontWeight);
+        }
+        if(border !== null){
+            $(element).css("border", border);
+        }
+    }
+        
+    function onRowClick(){
+        let target = this;
         let targetIndex = clickElements.indexOf(target);
         if(targetIndex === -1){
-            target.style.backgroundColor="lightblue";
-            target.style.fontWeight = "900";
+            changeStyle(target, "lightblue", "900", null);
             clickElements.push(target);
-
-           validationLongueur(clickElements.length, selectionText);
+            refreshSelectionText(clickElements.length);
         }
         else{
-            target.style.backgroundColor="white";
-            target.style.fontWeight = "500";
+            changeStyle(target, "white", "500", null);
             clickElements.splice(targetIndex,1);
-
-           validationLongueur(clickElements.length, selectionText);
+            refreshSelectionText(clickElements.length);
         }
-    });
-    element.addEventListener("mouseover", function() {this.style.border = "1px solid 888" ;});
-    element.addEventListener("mouseout", function() {this.style.border = "" ;});
-}
-function validationLongueur(longueur, element){
-     if(longueur > 1)
-                element.innerText = longueur+" éléments sélectionnés";
-            else
-                element.innerText = longueur+" élément sélectionné";
+    }
+        
+    function onRowMouseOver(){
+        changeStyle(this, null, null, "1px solid #888");
+    }
+                
+    function onRowMouseOut(){
+        changeStyle(this, null, null, "");
+    }       
+        
+    $("tr").on("click", onRowClick).on("mouseover", onRowMouseOver).on("mouseout", onRowMouseOut);
+// Lorsqu’on clique sur un tr, la fonction onRowClick s’active. Lorsqu’on survole un tr, la fonction onRowMouseOver s’active. Lorsqu’on sort d’un tr, la fonction onRowMouseOut s’active.
 
-
-}
-
-function changeStyle(element , backgroundColor, fontWeight){
-    element.innerText = element.backgroundColor = "bleu"
-}
+$('table').DataTable();
 </script>
 
 
