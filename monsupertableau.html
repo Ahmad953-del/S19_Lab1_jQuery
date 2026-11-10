@@ -503,6 +503,49 @@
         </tfoot>
     </table>
 
+    <script>
+let clickElements = []; // Assignation d'un tableau 
+let elements = document.getElementsByTagName("tr"); // Cherche tout les éléments dont la balise se trouve dans la parathèse.
+let selectionText = document.getElementById("selection"); // Vas chercher le prémier html qui a l'id en paramètre .
+
+
+for(let i = 0;i<elements.length;i++){ // iteration comme celui de c#
+    let element = elements[i]; // assignation de l'élément itéré à la variable element
+    element.addEventListener("click", function(event){ 
+        let target = this; 
+        let targetIndex = clickElements.indexOf(target);
+        if(targetIndex === -1){
+            target.style.backgroundColor="lightblue";
+            target.style.fontWeight = "900";
+            clickElements.push(target);
+
+           validationLongueur(clickElements.length, selectionText);
+        }
+        else{
+            target.style.backgroundColor="white";
+            target.style.fontWeight = "500";
+            clickElements.splice(targetIndex,1);
+
+           validationLongueur(clickElements.length, selectionText);
+        }
+    });
+    element.addEventListener("mouseover", function() {this.style.border = "1px solid 888" ;});
+    element.addEventListener("mouseout", function() {this.style.border = "" ;});
+}
+function validationLongueur(longueur, element){
+     if(longueur > 1)
+                element.innerText = longueur+" éléments sélectionnés";
+            else
+                element.innerText = longueur+" élément sélectionné";
+
+
+}
+
+function changeStyle(element , backgroundColor, fontWeight){
+    element.innerText = element.backgroundColor = "bleu"
+}
+</script>
+
 
 
 </body>
